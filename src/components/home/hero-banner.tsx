@@ -63,7 +63,9 @@ export function HeroBanner() {
               key={field.label}
               className='border-b border-white/15 px-6 py-4 text-left odd:border-r lg:border-r lg:border-b-0 lg:px-8'
             >
-              <p className='text-[15px] font-medium text-white'>{field.label}</p>
+              <p className='text-[15px] font-medium text-white'>
+                {field.label}
+              </p>
               <p className='mt-1 text-xs text-white/65'>{field.value}</p>
             </div>
           ))}
