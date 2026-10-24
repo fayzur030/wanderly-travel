@@ -1,6 +1,6 @@
 'use client'
 
-import Image from 'next/image'
+import Image, { type StaticImageData } from 'next/image'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import {
   Carousel,
@@ -8,63 +8,48 @@ import {
   CarouselItem,
   useCarousel,
 } from '@/components/ui/carousel'
-import { cn } from 'cn'
-
 import { Button } from '@/components/ui/button'
-import person1 from '@/assets/person2.png'
-import person2 from '@/assets/person1.png'
-const testimonials = [
+import michaelPhoto from '@/assets/person2.png'
+import sarahPhoto from '@/assets/person1.png'
+
+type Testimonial = {
+  quote: string
+  name: string
+  location: string
+  image: StaticImageData
+}
+
+const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      '"The Bali Trip Was Absolutely Magical! Every Detail Was Perfectly Planned. The Resorts Were Luxurious And The Cultural Experiences Were Unforgettable."',
+      'The Bali Trip Was Absolutely Magical! Every Detail Was Perfectly Planned. The Resorts Were Luxurious And The Cultural Experiences Were Unforgettable.',
     name: 'Michael Chen',
     location: 'Singapore',
-    image: person1,
+    image: michaelPhoto,
   },
   {
     quote:
-      '"Swiss Alps Adventure Exceeded All Expectations. The Mountain Views Were Breathtaking And Our Guide Was Incredibly Knowledgeable. Highly Recommend!"',
+      'Swiss Alps Adventure Exceeded All My Expectations. The Mountain Views Were Breathtaking And Our Guide Was Incredibly Knowledgeable. Highly Recommend!',
     name: 'Sarah Johnson',
     location: 'New York, USA',
-    image: person2,
-  },
-  {
-    quote:
-      '"From The Pristine Beaches Of Phuket To The Vibrant Night Markets, Every Moment Was Picture-Perfect. The Itinerary Struck The Ideal Balance Between Adventure And Relaxation."',
-    name: 'Emily Rodriguez',
-    location: 'Barcelona, Spain',
-    image: null,
-  },
-  {
-    quote:
-      '"Our Family Trip To Kyoto Was Flawlessly Organized. The Children Loved Every Activity And We Discovered Sides Of Japan We Never Knew Existed."',
-    name: 'David Thompson',
-    location: 'London, UK',
-    image: null,
+    image: sarahPhoto,
   },
 ]
-
-function initials(name: string) {
-  return name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-}
 
 function Controls() {
   const { scrollPrev, scrollNext } = useCarousel()
 
   return (
-    <div className='flex shrink-0 items-center gap-3'>
+    <div className='flex shrink-0 items-center gap-3.5 pt-1.5'>
       <Button
         type='button'
         aria-label='Previous testimonials'
         variant='outline'
         size='icon-sm'
         onClick={scrollPrev}
-        className='size-11 rounded-full border-border text-muted-foreground hover:border-[#00A8E8] hover:text-[#00A8E8]'
+        className='size-[42px] rounded-full border-neutral-300 bg-transparent text-neutral-500 transition-colors hover:border-neutral-400 hover:bg-neutral-50 hover:text-neutral-700'
       >
-        <ArrowLeft className='size-5' />
+        <ArrowLeft className='size-4' />
       </Button>
       <Button
         type='button'
@@ -72,9 +57,9 @@ function Controls() {
         variant='outline'
         size='icon-sm'
         onClick={scrollNext}
-        className='size-11 rounded-full border-border text-muted-foreground hover:border-[#00A8E8] hover:text-[#00A8E8]'
+        className='size-[42px] rounded-full border-neutral-300 bg-transparent text-neutral-500 transition-colors hover:border-neutral-400 hover:bg-neutral-50 hover:text-neutral-700'
       >
-        <ArrowRight className='size-5' />
+        <ArrowRight className='size-4' />
       </Button>
     </div>
   )
@@ -82,63 +67,47 @@ function Controls() {
 
 export function TestimonialsSection() {
   return (
-    <section className='w-full  bg-background px-6 py-16'>
-      <div className='mx-auto max-w-7xl'>
-        <Carousel opts={{ align: 'start', loop: true }} className='w-full'>
-          {/* Heading + carousel controls */}
-          <div className='flex items-center justify-between gap-6'>
+    <section className='bg-white px-5 py-16 sm:px-8 sm:py-20 lg:py-24'>
+      <div className='mx-auto w-full max-w-[972px]'>
+        <Carousel opts={{ align: 'start', containScroll: 'trimSnaps' }}>
+          <div className='flex items-start justify-between gap-6'>
             <div>
-              <h2 className='text-4xl font-medium tracking-tight text-foreground md:text-5xl'>
+              <h2 className='font-serif text-[32px] leading-[1.12] text-neutral-900 sm:text-[40px] lg:text-[46px]'>
                 What Travelers Say
               </h2>
-              <p className='mt-3 text-sm text-muted-foreground'>
+              <p className='mt-2 text-[13px] text-neutral-500 sm:text-[15px]'>
                 Real experiences from our happy travelers
               </p>
             </div>
+
             <Controls />
           </div>
 
-          {/* Cards */}
-          <CarouselContent className='mt-10 ml-0'>
-            {testimonials.map((item) => (
-              <CarouselItem
-                key={item.name}
-                className='basis-full pl-0 pr-0 md:basis-1/2 md:pl-8 md:first:pl-0'
-              >
-                <figure className='flex h-full flex-col justify-between gap-6 rounded-sm border border-border bg-white p-7 shadow-sm sm:flex-row'>
-                  <div className='flex flex-1 flex-col'>
-                    <blockquote className='text-base  leading-relaxed text-foreground'>
-                      {item.quote}
+          <CarouselContent className='-ml-6 mt-8'>
+            {TESTIMONIALS.map((testimonial) => (
+              <CarouselItem key={testimonial.name} className='pl-6 md:basis-1/2'>
+                <article className='flex h-full gap-6 border-t border-neutral-200 pt-1.5 pl-6'>
+                  <div className='flex flex-1 flex-col py-3'>
+                    <blockquote className='text-[17px] font-semibold leading-[1.15] tracking-tight text-neutral-900'>
+                      &quot;{testimonial.quote}&quot;
                     </blockquote>
-                    <figcaption className='mt-auto pt-8'>
-                      <p className='text-sm text-[#00A8E8]'>— {item.name}</p>
-                      <p className='mt-1 text-xs text-muted-foreground'>
-                        {item.location}
+
+                    <footer className='mt-auto pt-10'>
+                      <p className='text-[15px] font-medium text-[#15A1BF]'>
+                        &mdash; {testimonial.name}
                       </p>
-                    </figcaption>
+                      <p className='mt-1 text-xs text-neutral-500'>
+                        {testimonial.location}
+                      </p>
+                    </footer>
                   </div>
-                  <div className='size-44 shrink-0 overflow-hidden rounded-sm bg-muted sm:size-auto sm:w-44'>
-                    {item.image ? (
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={176}
-                        height={196}
-                        className='size-full object-cover'
-                      />
-                    ) : (
-                      <div
-                        className={cn(
-                          'flex size-full items-center justify-center',
-                          'bg-linear-to-br from-[#00A8E8] to-[#0076a8]',
-                          'text-3xl font-light text-white'
-                        )}
-                      >
-                        {initials(item.name)}
-                      </div>
-                    )}
-                  </div>
-                </figure>
+
+                  <Image
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className='h-[165px] w-[150px] shrink-0 object-cover'
+                  />
+                </article>
               </CarouselItem>
             ))}
           </CarouselContent>

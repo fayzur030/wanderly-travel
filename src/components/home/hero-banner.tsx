@@ -24,13 +24,13 @@ export function HeroBanner() {
       <div aria-hidden className='absolute inset-0 -z-10 bg-black/35' />
 
       <div className='flex flex-1 flex-col items-center justify-center px-4 py-16 text-center'>
-        <h1 className='font-light text-[34px] leading-[1.12] tracking-tight text-white sm:text-6xl lg:text-[76px]'>
+        <h1 className='font-light text-[44px] leading-[1.12] tracking-tight text-white sm:text-6xl lg:text-[76px]'>
           Discover Your
           <br />
           Next Adventure
         </h1>
 
-        <p className='mt-7 max-w-[600px] text-[15px] leading-relaxed text-white/85 sm:text-base'>
+        <p className='mt-7 max-w-150 text-[15px] leading-relaxed text-white/85 sm:text-base'>
           Explore breathtaking destinations and create unforgettable memories
           with our curated travel experiences.
         </p>
