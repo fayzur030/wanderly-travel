@@ -1,8 +1,7 @@
 'use client'
 
-import { Save, Trash, X } from 'lucide-react'
+import { Save, Trash } from 'lucide-react'
 import { useState } from 'react'
-import type { ChangeEvent, FormEvent } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
@@ -16,6 +15,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { PackageForm } from '@/types/addDestinationTypes'
+import { addDestination } from '@/services/addDestinationServer'
 
 const CATEGORIES = [
   'Beach',
@@ -26,56 +27,40 @@ const CATEGORIES = [
   'Cultural',
 ] as const
 
-type PackageForm = {
-  destinationName: string
-  country: string
-  category: string
-  price: string
-  duration: string
-  departureDate: string
-  imageUrl: string
-  description: string
-}
-
-const INITIAL_FORM: PackageForm = {
-  destinationName: 'Bali Paradise',
-  country: 'Indonesia',
-  category: 'Beach',
-  price: '',
-  duration: '',
-  departureDate: '',
-  imageUrl: '',
-  description: '',
-}
-
 const fieldClassName =
   'h-9 rounded-md border-neutral-200 bg-[#f7f8fa] px-3 text-xs text-neutral-900 shadow-none placeholder:text-neutral-400 focus-visible:border-[#15A1BF] focus-visible:bg-white focus-visible:ring-[#15A1BF]/20 md:text-xs dark:bg-input/30'
 
 const labelClassName = 'text-[11px] font-semibold text-neutral-800'
 
 const AddDestinationForm = () => {
-  const [form, setForm] = useState<PackageForm>(INITIAL_FORM)
   const [saved, setSaved] = useState(false)
 
-  const updateField =
-    (field: keyof PackageForm) =>
-    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setForm((current) => ({ ...current, [field]: event.target.value }))
-      setSaved(false)
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    const formData = new FormData(e.currentTarget)
+    const newDestination: PackageForm = {
+      destinationName: String(formData.get('destinationName') ?? ''),
+      country: String(formData.get('country') ?? ''),
+      category: String(formData.get('category') ?? ''),
+      price: Number(formData.get('price') ?? ''),
+      duration: String(formData.get('duration')),
+      departureDate: String(formData.get('departureDate') ?? ''),
+      imageUrl: String(formData.get('imageUrl') ?? ''),
+      description: String(formData.get('description') ?? ''),
     }
 
-  const handleCategoryChange = (value: string | null) => {
-    setForm((current) => ({ ...current, category: value ?? '' }))
-    setSaved(false)
+    try {
+      await addDestination(newDestination)
+      form.reset()
+    } catch (error) {
+      console.log(error)
+    }
+    console.log(newDestination)
   }
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setSaved(true)
-  }
-
-  const handleCancel = () => {
-    setForm(INITIAL_FORM)
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const form = e.currentTarget.form
+    form?.reset()
     setSaved(false)
   }
 
@@ -95,8 +80,8 @@ const AddDestinationForm = () => {
               <Input
                 id='destinationName'
                 name='destinationName'
-                value={form.destinationName}
-                onChange={updateField('destinationName')}
+                // value={form.destinationName}
+                // onChange={updateField('destinationName')}
                 className={fieldClassName}
                 placeholder='e.g. Bali Paradise'
                 required
@@ -111,8 +96,6 @@ const AddDestinationForm = () => {
                 <Input
                   id='country'
                   name='country'
-                  value={form.country}
-                  onChange={updateField('country')}
                   className={fieldClassName}
                   placeholder='e.g. Indonesia'
                   required
@@ -123,12 +106,7 @@ const AddDestinationForm = () => {
                 <Label className={labelClassName} htmlFor='category'>
                   Category
                 </Label>
-                <Select
-                  name='category'
-                  value={form.category}
-                  onValueChange={handleCategoryChange}
-                  required
-                >
+                <Select name='category' required>
                   <SelectTrigger
                     id='category'
                     className='w-full rounded-md border-neutral-200 bg-[#f7f8fa] px-3 text-xs text-neutral-900 focus-visible:border-[#15A1BF] focus-visible:bg-white focus-visible:ring-[#15A1BF]/20 data-[size=default]:h-9 dark:bg-input/30'
@@ -154,8 +132,6 @@ const AddDestinationForm = () => {
                 <Input
                   id='price'
                   name='price'
-                  value={form.price}
-                  onChange={updateField('price')}
                   className={fieldClassName}
                   placeholder='e.g. 1299'
                   inputMode='numeric'
@@ -170,8 +146,6 @@ const AddDestinationForm = () => {
                 <Input
                   id='duration'
                   name='duration'
-                  value={form.duration}
-                  onChange={updateField('duration')}
                   className={fieldClassName}
                   placeholder='e.g. 7 Days/6 Nights'
                   required
@@ -186,8 +160,6 @@ const AddDestinationForm = () => {
               <Input
                 id='departureDate'
                 name='departureDate'
-                value={form.departureDate}
-                onChange={updateField('departureDate')}
                 className={fieldClassName}
                 placeholder='mm/dd/yyyy'
                 required
@@ -202,8 +174,6 @@ const AddDestinationForm = () => {
                 id='imageUrl'
                 name='imageUrl'
                 type='url'
-                value={form.imageUrl}
-                onChange={updateField('imageUrl')}
                 className={fieldClassName}
                 placeholder='https://example.com/image.jpg'
                 required
@@ -217,8 +187,6 @@ const AddDestinationForm = () => {
               <Textarea
                 id='description'
                 name='description'
-                value={form.description}
-                onChange={updateField('description')}
                 className='field-sizing-fixed min-h-28 rounded-md border-neutral-200 bg-[#f7f8fa] px-3 py-2 text-xs text-neutral-900 shadow-none placeholder:text-neutral-400 focus-visible:border-[#15A1BF] focus-visible:bg-white focus-visible:ring-[#15A1BF]/20 md:text-xs dark:bg-input/30'
                 placeholder='Describe the travel experience...'
                 required
