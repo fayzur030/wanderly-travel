@@ -24,12 +24,12 @@ const FEATURES = [
 export function WhyChooseSection() {
   return (
     <section className='bg-[#E8F6FB] px-5 py-16 sm:px-8 sm:py-20 lg:py-24'>
-      <div className='mx-auto w-full max-w-[972px]'>
+      <div className='mx-auto w-full max-w-7xl'>
         <div className='text-center'>
           <h2 className='text-[30px] font-light leading-[1.15] tracking-tight text-neutral-900 sm:text-[38px] lg:text-[42px]'>
             Why Choose Wanderlust
           </h2>
-          <p className='mt-2 text-sm text-neutral-500 sm:mt-2.5'>
+          <p className='mt-2 text-sm text-neutral-500 sm:mt-2.5 sm:text-[15px]'>
             Your trusted partner for exceptional travel experiences
           </p>
         </div>
