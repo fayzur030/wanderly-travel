@@ -17,6 +17,7 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { PackageForm } from '@/types/addDestinationTypes'
 import { addDestination } from '@/services/addDestinationServer'
+import { toast } from 'sonner'
 
 const CATEGORIES = [
   'Beach',
@@ -52,6 +53,7 @@ const AddDestinationForm = () => {
 
     try {
       await addDestination(newDestination)
+      toast.success('Add to destination successfully')
       form.reset()
     } catch (error) {
       console.log(error)

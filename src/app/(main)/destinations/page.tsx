@@ -1,7 +1,11 @@
-import React from 'react'
+import AllDestinations from '@/components/destinations/AllDestinations'
 
 const Destinations = () => {
-  return <div>Destinations</div>
+  return (
+    <div>
+      <AllDestinations />
+    </div>
+  )
 }
 
 export default Destinations
