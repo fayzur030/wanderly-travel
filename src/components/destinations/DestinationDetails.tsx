@@ -5,7 +5,6 @@ import { Destinations } from '@/types/allDestinationType'
 // Lucide Icons
 import {
   ArrowLeft,
-  Trash2,
   MapPin,
   Calendar,
   Clock,
@@ -23,6 +22,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
 import EditDestinationModal from './EditDestinationModal'
+import { DeleteDestination } from './DeleteDestination'
 
 interface DestinationDetailsProps {
   destination: Destinations | Destinations[]
@@ -69,14 +69,7 @@ const DestinationDetails = ({ destination }: DestinationDetailsProps) => {
             Edit
           </Button> */}
           <EditDestinationModal destination={item} />
-          <Button
-            variant='outline'
-            size='sm'
-            className='gap-2 text-destructive border-destructive/30 hover:bg-destructive/10'
-          >
-            <Trash2 className='w-4 h-4' />
-            Cancel
-          </Button>
+          <DeleteDestination destination={item} />
         </div>
       </div>
 

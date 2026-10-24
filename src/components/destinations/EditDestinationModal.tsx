@@ -21,13 +21,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select'
-import { Save } from 'lucide-react'
+import { Save, Trash } from 'lucide-react'
 import { Destinations } from '@/types/allDestinationType'
 import { PackageForm } from '@/types/addDestinationTypes'
-import { updateDestination } from '@/services/updateDestination'
+
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { updateDestination } from '@/services/updateDestination'
 interface EditDestinationModalProps {
   destination: Destinations
 }
@@ -73,14 +74,20 @@ const EditDestinationModal = ({ destination }: EditDestinationModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button variant='outline'>Edit</Button>} />
+      <DialogTrigger
+        render={
+          <Button variant='outline' className={`cursor-pointer`}>
+            Edit
+          </Button>
+        }
+      />
 
       <DialogContent className='max-h-[90vh] overflow-y-auto sm:max-w-xl'>
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Edit Destination</DialogTitle>
+            <DialogTitle>Update Travel Package</DialogTitle>
             <DialogDescription>
-              Update your travel destination details below.
+              Make changes to the travel package details below
             </DialogDescription>
           </DialogHeader>
 
@@ -194,7 +201,13 @@ const EditDestinationModal = ({ destination }: EditDestinationModalProps) => {
           <DialogFooter className='mt-6 flex-row justify-end gap-3'>
             <DialogClose
               render={
-                <Button type='button' variant='outline'>
+                <Button
+                  type='button'
+                  variant='outline'
+                  size='lg'
+                  className='border-red-300 text-red-500 rounded-none cursor-pointer hover:border-red-300 hover:bg-red-50 hover:text-red-600'
+                >
+                  <Trash className='size-3.5' aria-hidden />
                   Cancel
                 </Button>
               }
@@ -202,7 +215,8 @@ const EditDestinationModal = ({ destination }: EditDestinationModalProps) => {
 
             <Button
               type='submit'
-              className='bg-[#15A1BF] text-white hover:bg-[#1290ab]'
+              size='lg'
+              className='bg-[#15A1BF] cursor-pointer text-white hover:bg-[#1290ab]'
             >
               <Save className='size-4' aria-hidden='true' />
               Save Changes
