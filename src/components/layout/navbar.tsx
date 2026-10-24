@@ -27,7 +27,7 @@ export function Navbar() {
 
   return (
     <header className='relative z-50 bg-white'>
-      <div className='mx-auto grid h-16 max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center px-5 sm:px-8 lg:h-20 lg:px-10'>
+      <div className='mx-auto grid h-16 container grid-cols-[1fr_auto_1fr] items-center px-5 sm:px-8 lg:h-16 lg:px-10'>
         <nav
           aria-label='Main'
           className='hidden items-center gap-7 text-sm font-medium text-neutral-800 lg:flex'
@@ -105,7 +105,9 @@ export function Navbar() {
                 aria-current={isActive(link.href) ? 'page' : undefined}
                 onClick={() => setMenuOpen(false)}
                 className={
-                  isActive(link.href) ? 'text-[#15A1BF]' : 'transition-colors hover:text-[#15A1BF]'
+                  isActive(link.href)
+                    ? 'text-[#15A1BF]'
+                    : 'transition-colors hover:text-[#15A1BF]'
                 }
               >
                 {link.label}

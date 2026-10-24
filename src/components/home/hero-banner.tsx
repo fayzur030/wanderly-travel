@@ -1,4 +1,4 @@
-import { ArrowRight, Search } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import banner from '@/assets/Banner.png'
 
@@ -11,7 +11,7 @@ const SEARCH_FIELDS = [
 
 export function HeroBanner() {
   return (
-    <section className='relative isolate flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-neutral-900 lg:min-h-[calc(100svh-5rem)]'>
+    <section className='relative isolate flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-neutral-900'>
       <Image
         src={banner}
         alt=''
@@ -24,7 +24,7 @@ export function HeroBanner() {
       <div aria-hidden className='absolute inset-0 -z-10 bg-black/35' />
 
       <div className='flex flex-1 flex-col items-center justify-center px-4 py-16 text-center'>
-        <h1 className='font-light text-[42px] leading-[1.1] tracking-tight text-white sm:text-6xl lg:text-[76px]'>
+        <h1 className='font-light text-[34px] leading-[1.12] tracking-tight text-white sm:text-6xl lg:text-[76px]'>
           Discover Your
           <br />
           Next Adventure
@@ -58,14 +58,10 @@ export function HeroBanner() {
         className='border-t border-white/10 bg-black/35 backdrop-blur-sm'
       >
         <div className='grid grid-cols-2 lg:grid-cols-[repeat(4,minmax(0,1fr))_auto]'>
-          {SEARCH_FIELDS.map((field, index) => (
+          {SEARCH_FIELDS.map((field) => (
             <div
               key={field.label}
-              className={`px-6 py-4 text-left lg:px-8 ${
-                index % 2 === 0 ? 'border-r border-white/15' : ''
-              } ${index < 2 ? 'border-b border-white/15' : ''} ${
-                index > 0 ? 'lg:border-r lg:border-white/15' : ''
-              } lg:border-b-0`}
+              className='border-b border-white/15 px-6 py-4 text-left odd:border-r lg:border-r lg:border-b-0 lg:px-8'
             >
               <p className='text-[15px] font-medium text-white'>{field.label}</p>
               <p className='mt-1 text-xs text-white/65'>{field.value}</p>
@@ -74,9 +70,8 @@ export function HeroBanner() {
 
           <button
             type='button'
-            className='col-span-2 flex cursor-pointer items-center justify-center gap-2 bg-[#15A1BF] px-10 py-4 text-base font-semibold text-white transition-colors hover:bg-[#12869E] lg:col-span-1'
+            className='col-span-2 flex cursor-pointer items-center justify-center bg-[#15A1BF] px-10 py-4 text-base font-semibold text-white transition-colors hover:bg-[#12869E] lg:col-span-1'
           >
-            <Search className='size-4 lg:hidden' strokeWidth={2.2} aria-hidden />
             Search
           </button>
         </div>
