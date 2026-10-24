@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { PackageForm } from '@/types/addDestinationTypes'
-import { addDestination } from '@/services/addDestinationServer'
+import { addDestination } from '@/services/addDestinationService'
 import { toast } from 'sonner'
 
 const CATEGORIES = [

@@ -1,9 +1,14 @@
 import AllDestinations from '@/components/destinations/AllDestinations'
+import { allDestinationService } from '@/services/AllDestinationService'
+import { Suspense } from 'react'
 
-const Destinations = () => {
+const Destinations = async () => {
+  const result = await allDestinationService()
   return (
     <div>
-      <AllDestinations />
+      <Suspense fallback={<p>Loading</p>}>
+        <AllDestinations destinations={result} />
+      </Suspense>
     </div>
   )
 }
