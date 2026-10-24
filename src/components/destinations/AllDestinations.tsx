@@ -10,7 +10,7 @@ interface destinationsProps {
 
 const AllDestinations = ({ destinations }: destinationsProps) => {
   return (
-    <div className='max-w-7xl mx-auto py-10'>
+    <div className='max-w-7xl mx-auto py-10 px-4 lg:px-0 md:px-0'>
       <div className='mb-11 space-y-2'>
         <h1 className='text-xl md:text-4xl font-light'>
           Explore All Destination
@@ -23,7 +23,7 @@ const AllDestinations = ({ destinations }: destinationsProps) => {
         {destinations.map((item) => (
           <Card
             key={item._id}
-            className='overflow-hidden rounded-xl hover:shadow border border-border/50 bg-card shadow-sm transition-all duration-300 hover:shadow-md'
+            className='overflow-hidden rounded-xl border border-border/50 bg-card shadow-sm transition-all duration-300 hover:shadow-md'
           >
             {/* Card Image Container */}
             <div className='relative aspect-video w-full overflow-hidden'>
@@ -43,12 +43,12 @@ const AllDestinations = ({ destinations }: destinationsProps) => {
               </div>
 
               {/* Title & Price */}
-              <div className='mt-2 flex items-baseline justify-between gap-2'>
-                <h3 className='text-xl font-bold tracking-tight text-foreground line-clamp-1'>
+              <div className=' flex items-baseline justify-between gap-2'>
+                <h3 className='text-xl font-medium tracking-tight text-foreground line-clamp-1'>
                   {item.destinationName}
                 </h3>
                 <div className='text-right shrink-0'>
-                  <span className='text-xl font-bold text-foreground'>
+                  <span className='text-xl font-light text-foreground'>
                     ${item.price}
                   </span>
                   <span className='text-xs text-muted-foreground'>/Person</span>
@@ -56,7 +56,7 @@ const AllDestinations = ({ destinations }: destinationsProps) => {
               </div>
             </CardHeader>
 
-            <CardContent className='px-5 py-2'>
+            <CardContent className='px-5 '>
               {/* Duration */}
               <div className='flex items-center gap-2 text-sm text-muted-foreground'>
                 <Calendar className='h-4 w-4 shrink-0 text-muted-foreground' />
