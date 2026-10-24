@@ -23,6 +23,8 @@ import {
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import EditDestination from './EditDestinationModal'
+import EditDestinationModal from './EditDestinationModal'
 
 interface DestinationDetailsProps {
   destination: Destinations | Destinations[]
@@ -64,10 +66,11 @@ const DestinationDetails = ({ destination }: DestinationDetailsProps) => {
           </Button>
         </Link>
         <div className='flex items-center gap-3'>
-          <Button variant='outline' size='sm' className='gap-2'>
+          {/* <Button variant='outline' size='sm' className='gap-2'>
             <Edit className='w-4 h-4' />
             Edit
-          </Button>
+          </Button> */}
+          <EditDestinationModal destination={item} />
           <Button
             variant='outline'
             size='sm'
