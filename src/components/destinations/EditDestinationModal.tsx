@@ -1,3 +1,4 @@
+'use client'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -22,6 +23,11 @@ import {
 } from '../ui/select'
 import { Save } from 'lucide-react'
 import { Destinations } from '@/types/allDestinationType'
+import { PackageForm } from '@/types/addDestinationTypes'
+import { updateDestination } from '@/services/updateDestination'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 interface EditDestinationModalProps {
   destination: Destinations
 }
@@ -36,12 +42,41 @@ const CATEGORIES = [
 ]
 
 const EditDestinationModal = ({ destination }: EditDestinationModalProps) => {
+  const [open, setOpen] = useState(false)
+  const router = useRouter()
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    const formData = new FormData(e.currentTarget)
+    const newDestination: PackageForm = {
+      destinationName: String(formData.get('destinationName') ?? ''),
+      country: String(formData.get('country') ?? ''),
+      category: String(formData.get('category') ?? ''),
+      price: Number(formData.get('price') ?? ''),
+      duration: String(formData.get('duration')),
+      departureDate: String(formData.get('departureDate') ?? ''),
+      imageUrl: String(formData.get('imageUrl') ?? ''),
+      description: String(formData.get('description') ?? ''),
+    }
+
+    try {
+      await updateDestination(destination._id, newDestination)
+      toast.success('update destination successfully')
+      form.reset()
+      router.refresh()
+      setOpen(false)
+    } catch (error) {
+      console.log(error)
+    }
+    console.log(newDestination)
+  }
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger render={<Button variant='outline'>Edit</Button>} />
 
       <DialogContent className='max-h-[90vh] overflow-y-auto sm:max-w-xl'>
-        <form>
+        <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Edit Destination</DialogTitle>
             <DialogDescription>

@@ -1,4 +1,3 @@
-import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Destinations } from '@/types/allDestinationType'
@@ -6,7 +5,6 @@ import { Destinations } from '@/types/allDestinationType'
 // Lucide Icons
 import {
   ArrowLeft,
-  Edit,
   Trash2,
   MapPin,
   Calendar,
@@ -23,7 +21,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import EditDestination from './EditDestinationModal'
+
 import EditDestinationModal from './EditDestinationModal'
 
 interface DestinationDetailsProps {
@@ -83,7 +81,7 @@ const DestinationDetails = ({ destination }: DestinationDetailsProps) => {
       </div>
 
       {/* Main Image Banner (Dynamic) */}
-      <div className='relative w-full h-[380px] sm:h-[450px]  overflow-hidden mb-8 shadow-md'>
+      <div className='relative w-full h-95 sm:h-122.5 overflow-hidden mb-8 shadow-md'>
         <Image
           src={imageUrl}
           alt={destinationName}
