@@ -1,3 +1,11 @@
+import { HeroBanner } from '@/components/home/hero-banner'
+import { Navbar } from '@/components/layout/navbar'
+
 export default function Home() {
-  return <div className='text-7xl '>Home</div>
+  return (
+    <>
+      <Navbar />
+      <HeroBanner />
+    </>
+  )
 }
