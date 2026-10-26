@@ -40,33 +40,30 @@ const UserInfo = () => {
     <div>
       {user ? (
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <button
-              type='button'
-              aria-label='Open user menu'
-              className='group flex items-center gap-2 rounded-full border border-neutral-200 bg-white p-1 pr-2 transition-all duration-200 hover:border-[#15A1BF]/40 hover:bg-[#15A1BF]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#15A1BF]/30'
-            >
-              <Avatar className='size-9 ring-2 ring-white'>
-                <AvatarImage
-                  src={user.image ?? undefined}
-                  alt={user.name ?? 'User avatar'}
-                />
+          <DropdownMenuTrigger
+            className='group flex items-center gap-2 rounded-full border border-neutral-200 bg-white p-1 pr-2 transition-all duration-200 hover:border-[#15A1BF]/40 hover:bg-[#15A1BF]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#15A1BF]/30'
+            aria-label='Open user menu'
+          >
+            <Avatar className='size-9 ring-2 ring-white'>
+              <AvatarImage
+                src={user.image ?? undefined}
+                alt={user.name ?? 'User avatar'}
+              />
 
-                <AvatarFallback className='bg-[#15A1BF]/10 text-xs font-semibold text-[#1289a2]'>
-                  {user.name
-                    ?.trim()
-                    .split(/\s+/)
-                    .map((part) => part[0])
-                    .slice(0, 2)
-                    .join('')
-                    .toUpperCase() || 'U'}
-                </AvatarFallback>
+              <AvatarFallback className='bg-[#15A1BF]/10 text-xs font-semibold text-[#1289a2]'>
+                {user.name
+                  ?.trim()
+                  .split(/\s+/)
+                  .map((part) => part[0])
+                  .slice(0, 2)
+                  .join('')
+                  .toUpperCase() || 'U'}
+              </AvatarFallback>
 
-                <AvatarBadge className='border-2 border-white bg-emerald-500 dark:border-white' />
-              </Avatar>
+              <AvatarBadge className='border-2 border-white bg-emerald-500' />
+            </Avatar>
 
-              <ChevronDown className='size-3.5 text-neutral-400 transition-transform duration-200 group-data-[state=open]:rotate-180' />
-            </button>
+            <ChevronDown className='size-3.5 text-neutral-400 transition-transform duration-200' />
           </DropdownMenuTrigger>
 
           <DropdownMenuContent

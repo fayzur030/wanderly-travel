@@ -10,10 +10,8 @@ import {
   Clock,
   Tag,
   CheckCircle2,
-  ArrowRight,
   ShieldCheck,
   Headphones,
-  CalendarDays,
 } from 'lucide-react'
 
 // Shadcn UI Components
@@ -23,9 +21,10 @@ import { Badge } from '@/components/ui/badge'
 
 import EditDestinationModal from './EditDestinationModal'
 import { DeleteDestination } from './DeleteDestination'
+import AddBookingCard from '../booking/AddBookingCard'
 
 interface DestinationDetailsProps {
-  destination: Destinations | Destinations[]
+  destination: Destinations
 }
 
 const DestinationDetails = ({ destination }: DestinationDetailsProps) => {
@@ -175,22 +174,7 @@ const DestinationDetails = ({ destination }: DestinationDetailsProps) => {
                 </div>
               </div>
 
-              {/* Date Box (Dynamic) */}
-              <div className='flex items-center gap-3 p-3 bg-muted/50 rounded-lg border border-border'>
-                <CalendarDays className='w-5 h-5 text-muted-foreground' />
-                <div className='flex flex-col'>
-                  <span className='text-xs text-muted-foreground'>
-                    Departure Date
-                  </span>
-                  <span className='text-sm font-medium'>{departureDate}</span>
-                </div>
-              </div>
-
-              {/* Book Now Button */}
-              <Button className='w-full bg-cyan-600 hover:bg-cyan-700 text-white font-medium py-6 text-base gap-2 cursor-pointer rounded-none shadow-md transition-all'>
-                Book Now
-                <ArrowRight className='w-4 h-4' />
-              </Button>
+              <AddBookingCard destinations={destination} />
 
               {/* Trust Badges / Features */}
               <div className='space-y-3 pt-2 text-xs text-muted-foreground'>

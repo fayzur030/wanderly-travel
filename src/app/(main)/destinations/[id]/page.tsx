@@ -10,8 +10,6 @@ interface DetailsProps {
 const DestinationDetailsPage = async ({ params }: DetailsProps) => {
   const { id } = await params
   const detailsdestination = await getDestinationById(id)
-  console.log(detailsdestination)
-
   return (
     <>
       <DestinationDetails destination={detailsdestination} />

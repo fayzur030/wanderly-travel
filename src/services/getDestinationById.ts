@@ -1,8 +1,6 @@
 import { Destinations } from '@/types/allDestinationType'
 
-export const getDestinationById = async (
-  id: string
-): Promise<Destinations[]> => {
+export const getDestinationById = async (id: string): Promise<Destinations> => {
   try {
     const res = await fetch(`http://localhost:5000/destination/${id}`)
     if (!res.ok) {
