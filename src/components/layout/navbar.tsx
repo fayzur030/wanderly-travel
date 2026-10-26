@@ -16,7 +16,7 @@ const NAV_LINKS = [
 
 const AUTH_LINKS = [
   { label: 'Login', href: '/login' },
-  { label: 'Sign Up', href: '/signup' },
+  { label: 'Sign Up', href: '/sign-up' },
 ] as const
 
 export function Navbar() {

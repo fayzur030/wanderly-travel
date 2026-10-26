@@ -2,8 +2,8 @@ import { PackageForm } from '@/types/addDestinationTypes'
 
 export const updateDestination = async (id: string, payload: PackageForm) => {
   try {
-    const res = await fetch(`http://localhost:5000/update-destination`, {
-      method: 'PUT',
+    const res = await fetch(`http://localhost:5000/update-destination/${id}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
