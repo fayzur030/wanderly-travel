@@ -1,12 +1,49 @@
 'use client'
+import { authClient } from '@/lib/auth-client'
 import { Mail, Lock } from 'lucide-react'
 import Link from 'next/link'
-
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { Spinner } from '../ui/spinner'
+type LoginDataType = {
+  email: string
+  password: string
+}
 export default function LoginForm() {
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    const formData = new FormData(e.currentTarget)
+    const userData = Object.fromEntries(formData.entries()) as LoginDataType
+
+    setLoading(true)
+    try {
+      const { error } = await authClient.signIn.email({
+        email: userData.email,
+        password: userData.password,
+      })
+
+      if (error) {
+        toast.error(error.message)
+        return
+      }
+      form.reset()
+      toast.success('Login successfully')
+      router.push('/')
+    } catch (error) {
+      console.log(error)
+      toast.error('something went wrong')
+    } finally {
+      setLoading(false)
+    }
+  }
   return (
     <div className='min-h-screen w-full bg-[#f8fafc] flex flex-col items-center justify-center p-4 text-slate-800 font-sans'>
       {/* Top Accent Pill */}
-      <div className='w-8 h-[3px] bg-[#1ab0ca] rounded-full mb-6' />
+      <div className='w-8 h-0.75 bg-[#1ab0ca] rounded-full mb-6' />
 
       {/* Header Section */}
       <div className='text-center mb-8'>
@@ -20,7 +57,7 @@ export default function LoginForm() {
 
       {/* Main Card Container */}
       <div className='w-full max-w-md bg-white rounded-xl shadow-xl shadow-slate-200/50 border border-slate-100 p-8 sm:p-10'>
-        <form className='space-y-5'>
+        <form onSubmit={handleSubmit} className='space-y-5'>
           {/* Email Field */}
           <div className='space-y-2'>
             <label className='text-sm font-bold text-slate-900 block'>
@@ -30,6 +67,8 @@ export default function LoginForm() {
               <Mail className='absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400' />
               <input
                 type='email'
+                id='email'
+                name='email'
                 placeholder='Enter your email'
                 className='w-full bg-[#f8fafc] border border-slate-200/80 rounded-lg pl-10 pr-4 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1ab0ca]/30 focus:border-[#1ab0ca] transition-all'
               />
@@ -45,6 +84,8 @@ export default function LoginForm() {
               <Lock className='absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400' />
               <input
                 type='password'
+                id='password'
+                name='password'
                 placeholder='Enter your password'
                 className='w-full bg-[#f8fafc] border border-slate-200/80 rounded-lg pl-10 pr-4 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1ab0ca]/30 focus:border-[#1ab0ca] transition-all'
               />
@@ -73,9 +114,17 @@ export default function LoginForm() {
           {/* Sign In Button */}
           <button
             type='submit'
-            className='w-full bg-[#1ab0ca] hover:bg-[#169db5] text-white font-medium py-2.5 px-4 rounded-lg shadow-sm transition-colors text-sm'
+            disabled={loading}
+            className='mt-4 flex h-10 w-full items-center justify-center gap-2 rounded-md bg-[#15A1BF] text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#1290ab] hover:shadow-md active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:shadow-none'
           >
-            Sign In
+            {loading ? (
+              <>
+                <Spinner className='size-4' />
+                <span>Login...</span>
+              </>
+            ) : (
+              'Login'
+            )}
           </button>
 
           {/* Divider */}
@@ -128,7 +177,7 @@ export default function LoginForm() {
       </div>
 
       {/* Bottom Accent Pill */}
-      <div className='w-8 h-[3px] bg-[#1ab0ca] rounded-full mt-10' />
+      <div className='w-8 h-0.75 bg-[#1ab0ca] rounded-full mt-10' />
     </div>
   )
 }

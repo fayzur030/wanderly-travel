@@ -76,8 +76,6 @@ const SignUpForm = () => {
     } finally {
       setLoading(false)
     }
-
-    console.log(userData)
   }
 
   return (
