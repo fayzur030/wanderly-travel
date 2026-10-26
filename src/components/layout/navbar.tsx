@@ -1,22 +1,18 @@
 'use client'
 
-import { Menu, UserRound, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import brand from '@/assets/Wanderlast.png'
+import UserInfo from '../user/UserInfo'
 
 const NAV_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Destinations', href: '/destinations' },
   { label: 'My Bookings', href: '/my-bookings' },
   { label: 'Admin', href: '/admin' },
-] as const
-
-const AUTH_LINKS = [
-  { label: 'Login', href: '/login' },
-  { label: 'Sign Up', href: '/sign-up' },
 ] as const
 
 export function Navbar() {
@@ -27,7 +23,8 @@ export function Navbar() {
 
   return (
     <header className='relative z-50 bg-white'>
-      <div className='mx-auto container grid h-16  grid-cols-[1fr_auto_1fr] items-center px-5 sm:px-8 lg:h-16 lg:px-10'>
+      <div className='container mx-auto grid h-16 grid-cols-[1fr_auto_1fr] items-center px-5 sm:px-8 lg:px-10'>
+        {/* Desktop Navigation */}
         <nav
           aria-label='Main'
           className='hidden items-center gap-7 text-sm font-medium text-neutral-800 lg:flex'
@@ -48,6 +45,7 @@ export function Navbar() {
           ))}
         </nav>
 
+        {/* Mobile Menu Button */}
         <button
           type='button'
           className='-ml-2 inline-flex size-10 items-center justify-center justify-self-start text-neutral-800 transition-colors hover:text-[#15A1BF] lg:hidden'
@@ -59,33 +57,19 @@ export function Navbar() {
           {menuOpen ? <X className='size-6' /> : <Menu className='size-6' />}
         </button>
 
+        {/* Brand Logo */}
         <Link
           href='/'
-          aria-label='Wanderlast home'
+          aria-label='Wanderlust home'
           className='justify-self-center'
           onClick={() => setMenuOpen(false)}
         >
-          <Image src={brand} alt='Wanderlast' className='h-6 w-auto' />
+          <Image src={brand} alt='Wanderlust' className='h-6 w-auto' />
         </Link>
 
-        <div className='hidden items-center justify-self-end gap-7 text-sm font-medium text-neutral-800 lg:flex'>
-          <Link
-            href='/profile'
-            className='flex items-center gap-2 transition-colors hover:text-[#15A1BF]'
-          >
-            <UserRound className='size-4' strokeWidth={1.6} />
-            Profile
-          </Link>
-
-          {AUTH_LINKS.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className='transition-colors hover:text-[#15A1BF]'
-            >
-              {link.label}
-            </Link>
-          ))}
+        {/* User Info */}
+        <div className='justify-self-end'>
+          <UserInfo />
         </div>
       </div>
 
@@ -114,28 +98,6 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
-
-          <div className='mt-5 flex flex-col gap-4 border-t border-neutral-200 pt-5 text-[15px] font-medium text-neutral-800'>
-            <Link
-              href='/profile'
-              onClick={() => setMenuOpen(false)}
-              className='flex items-center gap-2 transition-colors hover:text-[#15A1BF]'
-            >
-              <UserRound className='size-4' strokeWidth={1.6} />
-              Profile
-            </Link>
-
-            {AUTH_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className='transition-colors hover:text-[#15A1BF]'
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
         </div>
       )}
     </header>
