@@ -41,7 +41,7 @@ const UserInfo = () => {
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger
-            className='group flex items-center gap-2 rounded-full border border-neutral-200 bg-white p-1 pr-2 transition-all duration-200 hover:border-[#15A1BF]/40 hover:bg-[#15A1BF]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#15A1BF]/30'
+            className='group flex items-center gap-2 rounded-full border border-neutral-200 bg-white p-1 transition-all duration-200 hover:border-[#15A1BF]/40 hover:bg-[#15A1BF]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#15A1BF]/30'
             aria-label='Open user menu'
           >
             <Avatar className='size-9 ring-2 ring-white'>
@@ -128,7 +128,7 @@ const UserInfo = () => {
 
           <Link
             href='/sign-up'
-            className='inline-flex h-9 items-center justify-center rounded-md bg-[#15A1BF] px-4 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#1290ab] hover:shadow-md active:scale-[0.98]'
+            className='md:inline-flex hidden  h-9 items-center justify-center rounded-md bg-[#15A1BF] px-4 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#1290ab] hover:shadow-md active:scale-[0.98]'
           >
             Sign Up
           </Link>
