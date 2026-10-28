@@ -2,14 +2,13 @@
 import Image from 'next/image'
 import { Calendar, MapPin, Trash2, Eye, CheckCircle2 } from 'lucide-react'
 import { Booking } from '@/types/BookingType'
+import ActionButton from './ActionButton'
 
 interface BookingProps {
   item: Booking
-  onCancel?: (id: string) => void
-  onView?: (id: string) => void
 }
 
-const BookingCard = ({ item, onCancel, onView }: BookingProps) => {
+const BookingCard = ({ item }: BookingProps) => {
   return (
     <div className='max-w-7xl mx-auto mt-10'>
       <div className=' flex flex-col md:flex-row items-stretch gap-6 bg-white border border-gray-100 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow duration-200'>
@@ -55,24 +54,7 @@ const BookingCard = ({ item, onCancel, onView }: BookingProps) => {
             <div className='text-2xl font-bold text-cyan-600'>
               ${item.price}
             </div>
-
-            <div className='flex items-center gap-3'>
-              <button
-                onClick={() => onCancel?.(item._id)}
-                className='inline-flex items-center gap-1.5 px-4 py-2 border border-red-200 text-red-500 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors'
-              >
-                <Trash2 className='w-4 h-4' />
-                <span>Cancel</span>
-              </button>
-
-              <button
-                onClick={() => onView?.(item._id)}
-                className='inline-flex items-center gap-1.5 px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-sm font-medium transition-colors'
-              >
-                <Eye className='w-4 h-4' />
-                <span>View</span>
-              </button>
-            </div>
+            <ActionButton item={item} />
           </div>
         </div>
       </div>

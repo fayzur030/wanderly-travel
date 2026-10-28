@@ -3,7 +3,6 @@ import { auth } from '@/lib/auth'
 import { Booking } from '@/types/BookingType'
 import { headers } from 'next/headers'
 
-
 const session = await auth.api.getSession({
   headers: await headers(),
 })
@@ -23,9 +22,11 @@ const BookingsPage = async () => {
 
   return (
     <div>
-      {booking.map((booking) => (
-        <BookingCard key={booking._id} item={booking} />
-      ))}
+      {booking.length === 0
+        ? 'No booking item'
+        : booking.map((booking) => (
+            <BookingCard key={booking._id} item={booking} />
+          ))}
     </div>
   )
 }
