@@ -5,6 +5,7 @@ export const addDestination = async (payload: PackageForm) => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/add-destination`,
       {
+        
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
