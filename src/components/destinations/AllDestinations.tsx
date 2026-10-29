@@ -9,6 +9,7 @@ interface destinationsProps {
 }
 
 const AllDestinations = ({ destinations }: destinationsProps) => {
+  console.log(destinations)
   return (
     <div className='max-w-7xl mx-auto py-10 px-4 lg:px-0 md:px-0'>
       <div className='mb-11 space-y-2'>

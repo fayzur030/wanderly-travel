@@ -23,7 +23,7 @@ export function Navbar() {
 
   return (
     <header className='relative z-50 bg-white'>
-      <div className='container mx-auto grid h-16 grid-cols-[1fr_auto_1fr] items-center px-5 sm:px-8 lg:px-10'>
+      <div className='max-w-7xl mx-auto grid h-16 grid-cols-[1fr_auto_1fr] items-center px-5 sm:px-8 lg:px-10'>
         {/* Desktop Navigation */}
         <nav
           aria-label='Main'
