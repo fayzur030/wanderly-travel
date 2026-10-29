@@ -1,5 +1,6 @@
 import BookingCard from '@/components/booking/BookingCard'
 import { auth } from '@/lib/auth'
+import { getTokenFromServer } from '@/lib/getTokenFromServer'
 import { Booking } from '@/types/BookingType'
 import { headers } from 'next/headers'
 
@@ -9,11 +10,28 @@ const session = await auth.api.getSession({
 const user = session?.user
 
 const getBookingData = async (): Promise<Booking[]> => {
-  const res = await fetch(`http://localhost:5000/my-bookings/${user?.email}`)
-  if (!res.ok) {
-    throw new Error('Failed to booking data')
+  const jwtToken = await getTokenFromServer()
+
+  if (!user?.email) {
+    throw new Error('User email not found')
   }
+
+  const res = await fetch(
+    `http://localhost:5000/my-bookings/${encodeURIComponent(user.email)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+      cache: 'no-store',
+    }
+  )
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch booking data')
+  }
+
   const data = await res.json()
+
   return data.data
 }
 

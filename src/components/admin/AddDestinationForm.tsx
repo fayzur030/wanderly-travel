@@ -16,8 +16,9 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { PackageForm } from '@/types/addDestinationTypes'
-import { addDestination } from '@/services/addDestinationService'
+
 import { toast } from 'sonner'
+import { authClient } from '@/lib/auth-client'
 
 const CATEGORIES = [
   'Beach',
@@ -38,28 +39,55 @@ const AddDestinationForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     const form = e.currentTarget
-    const formData = new FormData(e.currentTarget)
+    const formData = new FormData(form)
+
     const newDestination: PackageForm = {
       destinationName: String(formData.get('destinationName') ?? ''),
       country: String(formData.get('country') ?? ''),
       category: String(formData.get('category') ?? ''),
       price: Number(formData.get('price') ?? ''),
-      duration: String(formData.get('duration')),
+      duration: String(formData.get('duration') ?? ''),
       departureDate: String(formData.get('departureDate') ?? ''),
       imageUrl: String(formData.get('imageUrl') ?? ''),
       description: String(formData.get('description') ?? ''),
     }
 
     try {
-      await addDestination(newDestination)
-      toast.success('Add to destination successfully')
+      // Get JWT token from Better Auth
+      const { data, error } = await authClient.token()
+
+      if (error || !data?.token) {
+        throw new Error('Failed to retrieve authentication token')
+      }
+
+      const jwtToken = data.token
+
+      // Send destination data to Express backend
+      const res = await fetch('http://localhost:5000/add-destination', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwtToken}`,
+        },
+        body: JSON.stringify(newDestination),
+      })
+
+      if (!res.ok) {
+        throw new Error('Add destination failed')
+      }
+
+      await res.json()
+
+      toast.success('Destination added successfully!')
       form.reset()
     } catch (error) {
-      console.log(error)
+      console.error('Error adding destination:', error)
+      toast.error('Failed to add destination')
     }
-    console.log(newDestination)
   }
+
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     const form = e.currentTarget.form
     form?.reset()

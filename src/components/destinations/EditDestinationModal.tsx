@@ -28,7 +28,8 @@ import { PackageForm } from '@/types/addDestinationTypes'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { updateDestination } from '@/services/updateDestination'
+
+import { getTokenFromClient } from '@/lib/getTokenFromClient'
 interface EditDestinationModalProps {
   destination: Destinations
 }
@@ -45,31 +46,56 @@ const CATEGORIES = [
 const EditDestinationModal = ({ destination }: EditDestinationModalProps) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     const form = e.currentTarget
-    const formData = new FormData(e.currentTarget)
-    const newDestination: PackageForm = {
+    const formData = new FormData(form)
+
+    const updatedDestination: PackageForm = {
       destinationName: String(formData.get('destinationName') ?? ''),
       country: String(formData.get('country') ?? ''),
       category: String(formData.get('category') ?? ''),
       price: Number(formData.get('price') ?? ''),
-      duration: String(formData.get('duration')),
+      duration: String(formData.get('duration') ?? ''),
       departureDate: String(formData.get('departureDate') ?? ''),
       imageUrl: String(formData.get('imageUrl') ?? ''),
       description: String(formData.get('description') ?? ''),
     }
 
     try {
-      await updateDestination(destination._id, newDestination)
-      toast.success('update destination successfully')
+      const jwtToken = await getTokenFromClient()
+
+      const res = await fetch(
+        `http://localhost:5000/update-destination/${destination._id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${jwtToken}`,
+          },
+          body: JSON.stringify(updatedDestination),
+        }
+      )
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => null)
+
+        throw new Error(errorData?.message || 'Failed to update destination')
+      }
+
+      toast.success('Destination updated successfully!')
       form.reset()
       router.refresh()
       setOpen(false)
     } catch (error) {
-      console.log(error)
+      console.error('Error updating destination:', error)
+
+      toast.error(
+        error instanceof Error ? error.message : 'Failed to update destination'
+      )
     }
-    console.log(newDestination)
   }
 
   return (

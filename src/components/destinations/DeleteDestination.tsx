@@ -10,7 +10,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { deleteDestination } from '@/services/deleteService'
+import { getTokenFromClient } from '@/lib/getTokenFromClient'
 import { Destinations } from '@/types/allDestinationType'
 import { AlertTriangle, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -24,14 +24,32 @@ export function DeleteDestination({
   destination,
 }: DeleteDestinationModalProps) {
   const router = useRouter()
+
   const handleDelete = async (id: string) => {
-    console.log(id)
     try {
-      await deleteDestination(id)
-      toast.success('Destination delete successfully')
+      const jwtToken = await getTokenFromClient()
+
+      const res = await fetch(
+        `http://localhost:5000/delete-destination/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      )
+
+      if (!res.ok) {
+        throw new Error('Failed to delete destination')
+      }
+
+      toast.success('Destination deleted successfully!')
+
       router.push('/destinations')
+      router.refresh()
     } catch (error) {
-      console.log(error)
+      console.error('Error deleting destination:', error)
+      toast.error('Failed to delete destination')
     }
   }
 

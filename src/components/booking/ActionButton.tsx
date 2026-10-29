@@ -1,4 +1,5 @@
 'use client'
+import { getTokenFromClient } from '@/lib/getTokenFromClient'
 import { Booking } from '@/types/BookingType'
 import { Eye, Trash2 } from 'lucide-react'
 import Link from 'next/link'
@@ -10,9 +11,14 @@ interface BookingProps {
 const ActionButton = ({ item }: BookingProps) => {
   const router = useRouter()
   const handleDeleteBooking = async (id: string) => {
+    const jwtToken = await getTokenFromClient()
     try {
       const res = await fetch(`http://localhost:5000/delete-booking/${id}`, {
+        cache: 'no-store',
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
       })
       if (!res.ok) {
         console.log('Failed to delete booking')
