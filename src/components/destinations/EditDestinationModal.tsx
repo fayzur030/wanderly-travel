@@ -68,7 +68,7 @@ const EditDestinationModal = ({ destination }: EditDestinationModalProps) => {
       const jwtToken = await getTokenFromClient()
 
       const res = await fetch(
-        `http://localhost:5000/update-destination/${destination._id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/update-destination/${destination._id}`,
         {
           method: 'PATCH',
           headers: {

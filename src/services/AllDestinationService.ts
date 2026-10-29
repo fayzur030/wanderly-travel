@@ -2,7 +2,7 @@ import { Destinations } from '@/types/allDestinationType'
 
 export const allDestinationService = async (): Promise<Destinations[]> => {
   try {
-    const res = await fetch(`http://localhost:5000/destinations`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destinations`)
     if (!res.ok) {
       throw new Error('Failed to fetch destinations')
     }

@@ -65,14 +65,17 @@ const AddDestinationForm = () => {
       const jwtToken = data.token
 
       // Send destination data to Express backend
-      const res = await fetch('http://localhost:5000/add-destination', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${jwtToken}`,
-        },
-        body: JSON.stringify(newDestination),
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/add-destination`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${jwtToken}`,
+          },
+          body: JSON.stringify(newDestination),
+        }
+      )
 
       if (!res.ok) {
         throw new Error('Add destination failed')

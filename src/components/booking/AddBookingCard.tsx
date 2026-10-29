@@ -25,7 +25,7 @@ const AddBookingCard = ({ destinations }: DestinationsProps) => {
       departureDate,
     }
     try {
-      const res = await fetch(`http://localhost:5000/bookings`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

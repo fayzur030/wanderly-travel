@@ -30,7 +30,7 @@ export function DeleteDestination({
       const jwtToken = await getTokenFromClient()
 
       const res = await fetch(
-        `http://localhost:5000/delete-destination/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/delete-destination/${id}`,
         {
           method: 'DELETE',
           headers: {

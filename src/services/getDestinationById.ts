@@ -4,11 +4,14 @@ export const getDestinationById = async (id: string): Promise<Destinations> => {
   const jwtToken = await getTokenFromServer()
 
   try {
-    const res = await fetch(`http://localhost:5000/destination/${id}`, {
-      headers: {
-        authorization: `Bearer ${jwtToken.token}`,
-      },
-    })
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/destination/${id}`,
+      {
+        headers: {
+          authorization: `Bearer ${jwtToken}`,
+        },
+      }
+    )
     if (!res.ok) {
       throw new Error('Failed to fetch destination data')
     }

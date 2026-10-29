@@ -13,13 +13,16 @@ const ActionButton = ({ item }: BookingProps) => {
   const handleDeleteBooking = async (id: string) => {
     const jwtToken = await getTokenFromClient()
     try {
-      const res = await fetch(`http://localhost:5000/delete-booking/${id}`, {
-        cache: 'no-store',
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/delete-booking/${id}`,
+        {
+          cache: 'no-store',
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      )
       if (!res.ok) {
         console.log('Failed to delete booking')
       }

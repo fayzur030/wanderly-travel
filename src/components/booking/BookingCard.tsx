@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { Calendar, MapPin, Trash2, Eye, CheckCircle2 } from 'lucide-react'
+import { Calendar, MapPin, CheckCircle2 } from 'lucide-react'
 import { Booking } from '@/types/BookingType'
 import ActionButton from './ActionButton'
 

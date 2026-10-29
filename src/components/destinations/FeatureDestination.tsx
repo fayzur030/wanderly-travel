@@ -14,7 +14,7 @@ import { Button } from '../ui/button'
 
 const getFeatureDestination = async (): Promise<Destinations[]> => {
   try {
-    const res = await fetch(`http://localhost:5000/feature-destination`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/feature-destination`)
     if (!res.ok) {
       throw new Error('fetch to failed feature destination')
     }
