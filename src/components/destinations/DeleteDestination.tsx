@@ -32,6 +32,7 @@ export function DeleteDestination({
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/delete-destination/${id}`,
         {
+          cache: 'no-cache',
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${jwtToken}`,
