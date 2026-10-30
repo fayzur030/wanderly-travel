@@ -14,7 +14,9 @@ import { Button } from '../ui/button'
 
 const getFeatureDestination = async (): Promise<Destinations[]> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/feature-destination`)
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/feature-destination`
+    )
     if (!res.ok) {
       throw new Error('fetch to failed feature destination')
     }
@@ -31,7 +33,7 @@ const FeatureDestination = async () => {
 
   return (
     <section className='mx-auto mt-6 max-w-7xl px-4 py-24 md:px-0'>
-      <div className='flex items-center justify-between'>
+      <div className='flex flex-col md:flex-row items-center justify-between'>
         <div>
           <h1 className='text-4xl md:text-5xl font-medium'>
             Featured Destinations
